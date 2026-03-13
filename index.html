@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الشعبية - إحصائيات القرآن الكريم العددية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --bg-primary: #faf7f2;
+  --bg-secondary: #fff8ee;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fffcf5;
+  --text-primary: #1a1206;
+  --text-secondary: #5c4a2e;
+  --text-muted: #8b7355;
+  --accent-gold: #c8973e;
+  --accent-gold-light: #e8c675;
+  --accent-gold-dark: #9a6f1e;
+  --accent-emerald: #1b6e4a;
+  --accent-emerald-light: #2d9b6a;
+  --accent-emerald-dark: #0e4a30;
+  --border-color: #e8dcc8;
+  --border-light: #f0e8d8;
+  --shadow-sm: 0 1px 3px rgba(26,18,6,0.06);
+  --shadow-md: 0 4px 12px rgba(26,18,6,0.08);
+  --shadow-lg: 0 8px 30px rgba(26,18,6,0.12);
+  --shadow-glow: 0 0 20px rgba(200,151,62,0.15);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --pattern-opacity: 0.03;
+}
+
+html.dark {
+  --bg-primary: #0f0d09;
+  --bg-secondary: #1a1610;
+  --bg-card: #211d15;
+  --bg-card-hover: #2a2519;
+  --text-primary: #f0e8d8;
+  --text-secondary: #c4b08a;
+  --text-muted: #8b7a5c;
+  --accent-gold: #d4a84a;
+  --accent-gold-light: #e8c675;
+  --accent-gold-dark: #b08530;
+  --accent-emerald: #2d9b6a;
+  --accent-emerald-light: #40c088;
+  --accent-emerald-dark: #1b7a50;
+  --border-color: #3a3120;
+  --border-light: #2a2418;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 20px rgba(212,168,74,0.1);
+  --pattern-opacity: 0.02;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Tajawal', 'Noto Naskh Arabic', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(200,151,62,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(27,110,74,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.geometric-pattern {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: var(--pattern-opacity);
+  background-image:
+    repeating-linear-gradient(0deg, var(--accent-gold) 0px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(90deg, var(--accent-gold) 0px, transparent 1px, transparent 40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  padding: 32px 16px 24px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.app-header::after {
+  content: '﷽';
+  display: block;
+  font-family: 'Amiri', serif;
+  font-size: 28px;
+  color: var(--accent-gold);
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+.app-title {
+  font-family: 'Amiri', serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  color: var(--accent-gold-dark);
+  text-shadow: 0 2px 4px rgba(200,151,62,0.15);
+  line-height: 1.4;
+}
+
+html.dark .app-title { color: var(--accent-gold); }
+
+.app-subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 300;
+}
+
+/* Stats Overview */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-gold);
+}
+
+.stat-card .stat-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.stat-card .stat-value {
+  font-family: 'Amiri', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  display: block;
+  line-height: 1.2;
+}
+
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Tabs */
+.tabs-container {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs-container::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-gold);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--accent-gold-dark), var(--accent-gold));
+  color: #fff;
+  border-color: var(--accent-gold);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Tab Content */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Search & Filter */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.search-input-wrapper i {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(200,151,62,0.1);
+}
+
+.filter-select {
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.filter-select:focus {
+  border-color: var(--accent-gold);
+}
+
+/* Surah Table */
+.surah-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.surah-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+}
+
+.surah-table thead {
+  background: linear-gradient(135deg, var(--accent-emerald-dark), var(--accent-emerald));
+  color: #fff;
+}
+
+.surah-table th {
+  padding: 14px 12px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.surah-table th:hover {
+  background: var(--accent-emerald-light);
+}
+
+.surah-table th .sort-icon { margin-right: 4px; font-size: 10px; opacity: 0.6; }
+.surah-table th.sorted .sort-icon { opacity: 1; }
+
+.surah-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.surah-table tbody tr:hover {
+  background: var(--bg-card-hover);
+}
+
+.surah-table tbody tr:hover td {
+  color: var(--accent-gold-dark);
+}
+
+.surah-name {
+  font-family: 'Amiri', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent-emerald-dark);
+}
+
+html.dark .surah-name { color: var(--accent-emerald-light); }
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-makki {
+  background: rgba(200,151,62,0.12);
+  color: var(--accent-gold-dark);
+  border: 1px solid rgba(200,151,62,0.25);
+}
+
+html.dark .badge-makki {
+  color: var(--accent-gold-light);
+}
+
+.badge-madani {
+  background: rgba(27,110,74,0.1);
+  color: var(--accent-emerald-dark);
+  border: 1px solid rgba(27,110,74,0.2);
+}
+
+html.dark .badge-madani {
+  color: var(--accent-emerald-light);
+}
+
+/* Calculator Section */
+.calc-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.calc-section h3 {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--accent-emerald);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-section h3 i { color: var(--accent-gold); }
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.calc-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.calc-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.calc-card input, .calc-card select, .calc-card textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.calc-card textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.calc-card input:focus, .calc-card select:focus, .calc-card textarea:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(200,151,62,0.1);
+}
+
+.calc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  margin-top: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent-emerald-dark), var(--accent-emerald));
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.calc-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.calc-result {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+}
+
+.calc-result .result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+
+.calc-result .result-row:last-child { border-bottom: none; }
+
+.calc-result .result-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.calc-result .result-value {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+/* Charts Area */
+.chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-container h3 {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--accent-emerald);
+  margin-bottom: 16px;
+}
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-left: 4px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar-label {
+  min-width: 80px;
+  font-size: 12px;
+  text-align: left;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  flex: 1;
+  height: 22px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+  min-width: 2px;
+}
+
+.bar-fill.gold {
+  background: linear-gradient(90deg, var(--accent-gold-dark), var(--accent-gold-light));
+}
+
+.bar-fill.emerald {
+  background: linear-gradient(90deg, var(--accent-emerald-dark), var(--accent-emerald-light));
+}
+
+.bar-value {
+  min-width: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Abjad Table */
+.abjad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.abjad-cell {
+  text-align: center;
+  padding: 10px 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.abjad-cell:hover {
+  border-color: var(--accent-gold);
+  transform: scale(1.05);
+}
+
+.abjad-letter {
+  font-family: 'Amiri', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  line-height: 1.2;
+}
+
+.abjad-value {
+  font-size: 13px;
+  color: var(--accent-gold-dark);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+html.dark .abjad-value { color: var(--accent-gold-light); }
+
+/* Detail Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: var(--accent-gold);
+  color: #fff;
+}
+
+.modal-surah-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-surah-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+}
+
+.modal-surah-name {
+  font-family: 'Amiri', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modal-info-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+
+.modal-info-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.modal-info-value {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-container { padding: 10px; }
+  .stats-overview { grid-template-columns: repeat(2, 1fr); }
+  .calc-grid { grid-template-columns: 1fr; }
+  .modal-info-grid { grid-template-columns: 1fr; }
+  .surah-table th, .surah-table td { padding: 10px 6px; font-size: 12px; }
+  .surah-name { font-size: 14px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 3px; }
+
+/* Animations */
+.stat-card { animation: slideUp 0.5s ease backwards; }
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.1s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.2s; }
+.stat-card:nth-child(5) { animation-delay: 0.25s; }
+.stat-card:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* No results */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.no-results i { font-size: 36px; margin-bottom: 12px; display: block; color: var(--border-color); }
+
+.surah-row-clickable { cursor: pointer; }
+
+/* Verse range section */
+.verse-range-section {
+  margin-top: 20px;
+}
+
+.range-inputs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.range-inputs input {
+  width: 80px;
+}
+
+.range-inputs span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Summary boxes */
+.summary-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summary-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.summary-item .s-value {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.summary-item .s-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="geometric-pattern"></div>
+
+<div class="app-container">
+  <!-- Header -->
+  <header class="app-header">
+    <h1 class="app-title">الشعبية بالقرآن الرقمي</h1>
+    <p class="app-subtitle">إحصائيات وحسابات عددية شاملة للقرآن الكريم</p>
+  </header>
+
+  <!-- Stats Overview -->
+  <div class="stats-overview" id="statsOverview"></div>
+
+  <!-- Tabs -->
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="surahs"><i class="fas fa-list-ol"></i> السور</button>
+    <button class="tab-btn" data-tab="calculator"><i class="fas fa-calculator"></i> الحاسبة العددية</button>
+    <button class="tab-btn" data-tab="abjad"><i class="fas fa-spell-check"></i> حساب الجُمَّل</button>
+    <button class="tab-btn" data-tab="charts"><i class="fas fa-chart-bar"></i> الرسوم البيانية</button>
+    <button class="tab-btn" data-tab="compare"><i class="fas fa-balance-scale"></i> المقارنة</button>
+  </div>
+
+  <!-- Tab: Surahs -->
+  <div class="tab-content active" id="tab-surahs">
+    <div class="search-bar">
+      <div class="search-input-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" class="search-input" id="surahSearch" placeholder="ابحث عن سورة بالاسم أو الرقم...">
+      </div>
+      <select class="filter-select" id="revelationFilter">
+        <option value="all">الكل</option>
+        <option value="مكية">مكية</option>
+        <option value="مدنية">مدنية</option>
+      </select>
+      <select class="filter-select" id="sortBy">
+        <option value="number">ترتيب المصحف</option>
+        <option value="revelation">ترتيب النزول</option>
+        <option value="verses-desc">الآيات (تنازلي)</option>
+        <option value="verses-asc">الآيات (تصاعدي)</option>
+        <option value="words-desc">الكلمات (تنازلي)</option>
+        <option value="letters-desc">الحروف (تنازلي)</option>
+      </select>
+    </div>
+
+    <div class="summary-box" id="filterSummary"></div>
+
+    <div class="surah-table-wrapper">
+      <table class="surah-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>السورة</th>
+            <th>الآيات</th>
+            <th>الكلمات</th>
+            <th>الحروف</th>
+            <th>النوع</th>
+            <th>ترتيب النزول</th>
+          </tr>
+        </thead>
+        <tbody id="surahTableBody"></tbody>
+      </table>
+    </div>
+    <div class="no-results" id="noResults" style="display:none;">
+      <i class="fas fa-search"></i>
+      <p>لا توجد نتائج مطابقة</p>
+    </div>
+  </div>
+
+  <!-- Tab: Calculator -->
+  <div class="tab-content" id="tab-calculator">
+    <div class="calc-section">
+      <h3><i class="fas fa-mosque"></i> حاسبة إحصائيات السورة</h3>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <label>اختر السورة</label>
+          <select id="calcSurahSelect"></select>
+          <button class="calc-btn" onclick="calculateSurahStats()"><i class="fas fa-calculator"></i> احسب</button>
+          <div class="calc-result" id="surahCalcResult"></div>
+        </div>
+        <div class="calc-card">
+          <label>حساب مجموع الآيات (من سورة إلى سورة)</label>
+          <div class="range-inputs">
+            <select id="rangeFrom" style="flex:1;"></select>
+            <span>إلى</span>
+            <select id="rangeTo" style="flex:1;"></select>
+          </div>
+          <button class="calc-btn" onclick="calculateRange()"><i class="fas fa-sigma"></i> احسب المجموع</button>
+          <div class="calc-result" id="rangeCalcResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-section">
+      <h3><i class="fas fa-hashtag"></i> حاسبة الأرقام القرآنية</h3>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <label>مجموع أرقام السور</label>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">مجموع أرقام السور من 1 إلى 114</p>
+          <div class="calc-result">
+            <div class="result-row">
+              <span class="result-label">المجموع</span>
+              <span class="result-value" id="sumSurahNumbers">٦٥٥٥</span>
+            </div>
+          </div>
+        </div>
+        <div class="calc-card">
+          <label>بحث عن سور بعدد آيات محدد</label>
+          <input type="number" id="verseCountSearch" placeholder="أدخل عدد الآيات" min="1">
+          <button class="calc-btn" onclick="searchByVerseCount()"><i class="fas fa-search"></i> بحث</button>
+          <div class="calc-result" id="verseCountResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-section">
+      <h3><i class="fas fa-divide"></i> حاسبة القسمة والمضاعفات</h3>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <label>السور التي عدد آياتها من مضاعفات</label>
+          <input type="number" id="multipleOf" placeholder="مثال: 7" min="1">
+          <button class="calc-btn" onclick="findMultiples()"><i class="fas fa-percentage"></i> ابحث</button>
+          <div class="calc-result" id="multiplesResult"></div>
+        </div>
+        <div class="calc-card">
+          <label>حساب القيمة العددية لرقم السورة + عدد آياتها</label>
+          <select id="sumSurahSelect2"></select>
+          <button class="calc-btn" onclick="calcSurahSum()"><i class="fas fa-plus"></i> احسب</button>
+          <div class="calc-result" id="surahSumResult"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Abjad -->
+  <div class="tab-content" id="tab-abjad">
+    <div class="calc-section">
+      <h3><i class="fas fa-font"></i> حساب الجُمَّل (أبجد هوز)</h3>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">
+        حساب الجُمَّل هو نظام رقمي عربي قديم يعطي لكل حرف قيمة عددية. يُستخدم في الإعجاز العددي للقرآن الكريم.
+      </p>
+      <div class="abjad-grid" id="abjadGrid"></div>
+    </div>
+
+    <div class="calc-section">
+      <h3><i class="fas fa-keyboard"></i> حاسبة الجُمَّل</h3>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <label>أدخل النص العربي</label>
+          <textarea id="abjadInput" placeholder="اكتب هنا النص المراد حساب قيمته..."></textarea>
+          <button class="calc-btn" onclick="calculateAbjad()"><i class="fas fa-calculator"></i> احسب القيمة</button>
+          <div class="calc-result" id="abjadResult"></div>
+        </div>
+        <div class="calc-card">
+          <label>حساب جُمَّل اسم السورة</label>
+          <select id="abjadSurahSelect"></select>
+          <button class="calc-btn" onclick="calcSurahAbjad()"><i class="fas fa-calculator"></i> احسب</button>
+          <div class="calc-result" id="abjadSurahResult"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Charts -->
+  <div class="tab-content" id="tab-charts">
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-bar" style="color:var(--accent-gold);margin-left:8px;"></i> أطول 20 سورة (بعدد الآيات)</h3>
+      <div class="bar-chart" id="topSurahsChart"></div>
+    </div>
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-bar" style="color:var(--accent-gold);margin-left:8px;"></i> أقصر 20 سورة (بعدد الآيات)</h3>
+      <div class="bar-chart" id="bottomSurahsChart"></div>
+    </div>
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-pie" style="color:var(--accent-gold);margin-left:8px;"></i> توزيع السور حسب النوع</h3>
+      <div id="pieChart" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;padding:20px;">
+      </div>
+    </div>
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-area" style="color:var(--accent-gold);margin-left:8px;"></i> توزيع عدد الآيات لكل سورة</h3>
+      <canvas id="versesCanvas" style="width:100%;height:250px;"></canvas>
+    </div>
+  </div>
+
+  <!-- Tab: Compare -->
+  <div class="tab-content" id="tab-compare">
+    <div class="calc-section">
+      <h3><i class="fas fa-balance-scale"></i> مقارنة بين سورتين</h3>
+      <div class="calc-grid">
+        <div class="calc-card">
+          <label>السورة الأولى</label>
+          <select id="compare1"></select>
+        </div>
+        <div class="calc-card">
+          <label>السورة الثانية</label>
+          <select id="compare2"></select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="compareSurahs()" style="margin-top:16px;"><i class="fas fa-balance-scale"></i> قارن</button>
+      <div class="calc-result" id="compareResult" style="margin-top:16px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="surahModal">
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<script>
+// Dark mode detection
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+  if (event.matches) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+});
+
+// ========== QURAN DATA ==========
+const surahs = [
+  {n:1,name:"الفاتحة",verses:7,words:29,letters:139,type:"مكية",revOrder:5},
+  {n:2,name:"البقرة",verses:286,words:6144,letters:25613,type:"مدنية",revOrder:87},
+  {n:3,name:"آل عمران",verses:200,words:3503,letters:14605,type:"مدنية",revOrder:89},
+  {n:4,name:"النساء",verses:176,words:3763,letters:16030,type:"مدنية",revOrder:92},
+  {n:5,name:"المائدة",verses:120,words:2837,letters:11892,type:"مدنية",revOrder:112},
+  {n:6,name:"الأنعام",verses:165,words:3055,letters:12418,type:"مكية",revOrder:55},
+  {n:7,name:"الأعراف",verses:206,words:3344,letters:14071,type:"مكية",revOrder:39},
+  {n:8,name:"الأنفال",verses:75,words:1243,letters:5294,type:"مدنية",revOrder:88},
+  {n:9,name:"التوبة",verses:129,words:2506,letters:10873,type:"مدنية",revOrder:113},
+  {n:10,name:"يونس",verses:109,words:1841,letters:7714,type:"مكية",revOrder:51},
+  {n:11,name:"هود",verses:123,words:1947,letters:7577,type:"مكية",revOrder:52},
+  {n:12,name:"يوسف",verses:111,words:1795,letters:7176,type:"مكية",revOrder:53},
+  {n:13,name:"الرعد",verses:43,words:854,letters:3450,type:"مدنية",revOrder:96},
+  {n:14,name:"إبراهيم",verses:52,words:831,letters:3434,type:"مكية",revOrder:72},
+  {n:15,name:"الحجر",verses:99,words:658,letters:2760,type:"مكية",revOrder:54},
+  {n:16,name:"النحل",verses:128,words:1845,letters:7642,type:"مكية",revOrder:70},
+  {n:17,name:"الإسراء",verses:111,words:1559,letters:6460,type:"مكية",revOrder:50},
+  {n:18,name:"الكهف",verses:110,words:1583,letters:6425,type:"مكية",revOrder:69},
+  {n:19,name:"مريم",verses:98,words:972,letters:3835,type:"مكية",revOrder:44},
+  {n:20,name:"طه",verses:135,words:1354,letters:5266,type:"مكية",revOrder:45},
+  {n:21,name:"الأنبياء",verses:112,words:1174,letters:4901,type:"مكية",revOrder:73},
+  {n:22,name:"الحج",verses:78,words:1279,letters:5146,type:"مدنية",revOrder:103},
+  {n:23,name:"المؤمنون",verses:118,words:1055,letters:4486,type:"مكية",revOrder:74},
+  {n:24,name:"النور",verses:64,words:1317,letters:5596,type:"مدنية",revOrder:102},
+  {n:25,name:"الفرقان",verses:77,words:896,letters:3786,type:"مكية",revOrder:42},
+  {n:26,name:"الشعراء",verses:227,words:1322,letters:5566,type:"مكية",revOrder:47},
+  {n:27,name:"النمل",verses:93,words:1159,letters:4799,type:"مكية",revOrder:48},
+  {n:28,name:"القصص",verses:88,words:1441,letters:5791,type:"مكية",revOrder:49},
+  {n:29,name:"العنكبوت",verses:69,words:982,letters:4165,type:"مكية",revOrder:85},
+  {n:30,name:"الروم",verses:60,words:820,letters:3385,type:"مكية",revOrder:84},
+  {n:31,name:"لقمان",verses:34,words:550,letters:2121,type:"مكية",revOrder:57},
+  {n:32,name:"السجدة",verses:30,words:374,letters:1523,type:"مكية",revOrder:75},
+  {n:33,name:"الأحزاب",verses:73,words:1303,letters:5618,type:"مدنية",revOrder:90},
+  {n:34,name:"سبأ",verses:54,words:884,letters:3593,type:"مكية",revOrder:58},
+  {n:35,name:"فاطر",verses:45,words:780,letters:3218,type:"مكية",revOrder:43},
+  {n:36,name:"يس",verses:83,words:733,letters:3028,type:"مكية",revOrder:41},
+  {n:37,name:"الصافات",verses:182,words:866,letters:3903,type:"مكية",revOrder:56},
+  {n:38,name:"ص",verses:88,words:735,letters:3067,type:"مكية",revOrder:38},
+  {n:39,name:"الزمر",verses:75,words:1177,letters:4721,type:"مكية",revOrder:59},
+  {n:40,name:"غافر",verses:85,words:1228,letters:4984,type:"مكية",revOrder:60},
+  {n:41,name:"فصلت",verses:54,words:796,letters:3282,type:"مكية",revOrder:61},
+  {n:42,name:"الشورى",verses:53,words:860,letters:3489,type:"مكية",revOrder:62},
+  {n:43,name:"الزخرف",verses:89,words:836,letters:3492,type:"مكية",revOrder:63},
+  {n:44,name:"الدخان",verses:59,words:346,letters:1439,type:"مكية",revOrder:64},
+  {n:45,name:"الجاثية",verses:37,words:488,letters:2014,type:"مكية",revOrder:65},
+  {n:46,name:"الأحقاف",verses:35,words:646,letters:2631,type:"مكية",revOrder:66},
+  {n:47,name:"محمد",verses:38,words:542,letters:2349,type:"مدنية",revOrder:95},
+  {n:48,name:"الفتح",verses:29,words:560,letters:2439,type:"مدنية",revOrder:111},
+  {n:49,name:"الحجرات",verses:18,words:353,letters:1493,type:"مدنية",revOrder:106},
+  {n:50,name:"ق",verses:45,words:373,letters:1507,type:"مكية",revOrder:34},
+  {n:51,name:"الذاريات",verses:60,words:360,letters:1510,type:"مكية",revOrder:67},
+  {n:52,name:"الطور",verses:49,words:312,letters:1292,type:"مكية",revOrder:76},
+  {n:53,name:"النجم",verses:62,words:360,letters:1405,type:"مكية",revOrder:23},
+  {n:54,name:"القمر",verses:55,words:342,letters:1438,type:"مكية",revOrder:37},
+  {n:55,name:"الرحمن",verses:78,words:352,letters:1585,type:"مدنية",revOrder:97},
+  {n:56,name:"الواقعة",verses:96,words:379,letters:1692,type:"مكية",revOrder:46},
+  {n:57,name:"الحديد",verses:29,words:575,letters:2475,type:"مدنية",revOrder:94},
+  {n:58,name:"المجادلة",verses:22,words:475,letters:1990,type:"مدنية",revOrder:105},
+  {n:59,name:"الحشر",verses:24,words:447,letters:1913,type:"مدنية",revOrder:101},
+  {n:60,name:"الممتحنة",verses:13,words:352,letters:1510,type:"مدنية",revOrder:91},
+  {n:61,name:"الصف",verses:14,words:226,letters:938,type:"مدنية",revOrder:109},
+  {n:62,name:"الجمعة",verses:11,words:177,letters:749,type:"مدنية",revOrder:110},
+  {n:63,name:"المنافقون",verses:11,words:181,letters:780,type:"مدنية",revOrder:104},
+  {n:64,name:"التغابن",verses:18,words:242,letters:1066,type:"مدنية",revOrder:108},
+  {n:65,name:"الطلاق",verses:12,words:289,letters:1187,type:"مدنية",revOrder:99},
+  {n:66,name:"التحريم",verses:12,words:254,letters:1060,type:"مدنية",revOrder:107},
+  {n:67,name:"الملك",verses:30,words:333,letters:1316,type:"مكية",revOrder:77},
+  {n:68,name:"القلم",verses:52,words:301,letters:1258,type:"مكية",revOrder:2},
+  {n:69,name:"الحاقة",verses:52,words:261,letters:1107,type:"مكية",revOrder:78},
+  {n:70,name:"المعارج",verses:44,words:217,letters:941,type:"مكية",revOrder:79},
+  {n:71,name:"نوح",verses:28,words:227,letters:950,type:"مكية",revOrder:71},
+  {n:72,name:"الجن",verses:28,words:286,letters:1109,type:"مكية",revOrder:40},
+  {n:73,name:"المزمل",verses:20,words:200,letters:836,type:"مكية",revOrder:3},
+  {n:74,name:"المدثر",verses:56,words:256,letters:1015,type:"مكية",revOrder:4},
+  {n:75,name:"القيامة",verses:40,words:164,letters:652,type:"مكية",revOrder:31},
+  {n:76,name:"الإنسان",verses:31,words:243,letters:1065,type:"مدنية",revOrder:98},
+  {n:77,name:"المرسلات",verses:50,words:181,letters:815,type:"مكية",revOrder:33},
+  {n:78,name:"النبأ",verses:40,words:174,letters:766,type:"مكية",revOrder:80},
+  {n:79,name:"النازعات",verses:46,words:179,letters:762,type:"مكية",revOrder:81},
+  {n:80,name:"عبس",verses:42,words:133,letters:538,type:"مكية",revOrder:24},
+  {n:81,name:"التكوير",verses:29,words:104,letters:425,type:"مكية",revOrder:7},
+  {n:82,name:"الانفطار",verses:19,words:81,letters:327,type:"مكية",revOrder:82},
+  {n:83,name:"المطففين",verses:36,words:169,letters:740,type:"مكية",revOrder:86},
+  {n:84,name:"الانشقاق",verses:25,words:108,letters:436,type:"مكية",revOrder:83},
+  {n:85,name:"البروج",verses:22,words:109,letters:458,type:"مكية",revOrder:27},
+  {n:86,name:"الطارق",verses:17,words:61,letters:249,type:"مكية",revOrder:36},
+  {n:87,name:"الأعلى",verses:19,words:72,letters:296,type:"مكية",revOrder:8},
+  {n:88,name:"الغاشية",verses:26,words:92,letters:381,type:"مكية",revOrder:68},
+  {n:89,name:"الفجر",verses:30,words:139,letters:574,type:"مكية",revOrder:10},
+  {n:90,name:"البلد",verses:20,words:82,letters:335,type:"مكية",revOrder:35},
+  {n:91,name:"الشمس",verses:15,words:54,letters:249,type:"مكية",revOrder:26},
+  {n:92,name:"الليل",verses:21,words:71,letters:312,type:"مكية",revOrder:9},
+  {n:93,name:"الضحى",verses:11,words:40,letters:164,type:"مكية",revOrder:11},
+  {n:94,name:"الشرح",verses:8,words:27,letters:102,type:"مكية",revOrder:12},
+  {n:95,name:"التين",verses:8,words:34,letters:156,type:"مكية",revOrder:28},
+  {n:96,name:"العلق",verses:19,words:72,letters:281,type:"مكية",revOrder:1},
+  {n:97,name:"القدر",verses:5,words:30,letters:114,type:"مكية",revOrder:25},
+  {n:98,name:"البينة",verses:8,words:94,letters:399,type:"مدنية",revOrder:100},
+  {n:99,name:"الزلزلة",verses:8,words:36,letters:149,type:"مدنية",revOrder:93},
+  {n:100,name:"العاديات",verses:11,words:40,letters:164,type:"مكية",revOrder:14},
+  {n:101,name:"القارعة",verses:11,words:36,letters:158,type:"مكية",revOrder:30},
+  {n:102,name:"التكاثر",verses:8,words:28,letters:122,type:"مكية",revOrder:16},
+  {n:103,name:"العصر",verses:3,words:14,letters:68,type:"مكية",revOrder:13},
+  {n:104,name:"الهمزة",verses:9,words:33,letters:133,type:"مكية",revOrder:32},
+  {n:105,name:"الفيل",verses:5,words:23,letters:96,type:"مكية",revOrder:19},
+  {n:106,name:"قريش",verses:4,words:17,letters:73,type:"مكية",revOrder:29},
+  {n:107,name:"الماعون",verses:7,words:25,letters:112,type:"مكية",revOrder:17},
+  {n:108,name:"الكوثر",verses:3,words:10,letters:42,type:"مكية",revOrder:15},
+  {n:109,name:"الكافرون",verses:6,words:26,letters:94,type:"مكية",revOrder:18},
+  {n:110,name:"النصر",verses:3,words:19,letters:79,type:"مدنية",revOrder:114},
+  {n:111,name:"المسد",verses:5,words:23,letters:81,type:"مكية",revOrder:6},
+  {n:112,name:"الإخلاص",verses:4,words:15,letters:47,type:"مكية",revOrder:22},
+  {n:113,name:"الفلق",verses:5,words:23,letters:71,type:"مكية",revOrder:20},
+  {n:114,name:"الناس",verses:6,words:20,letters:80,type:"مكية",revOrder:21}
+];
+
+// Abjad values
+const abjadMap = {
+  'ا':1,'أ':1,'إ':1,'آ':1,'ب':2,'ج':3,'د':4,'ه':5,'هـ':5,'و':6,'ؤ':6,
+  'ز':7,'ح':8,'ط':9,'ي':10,'ى':10,'ئ':10,'ك':20,'ل':30,'م':40,'ن':50,
+  'س':60,'ع':70,'ف':80,'ص':90,'ق':100,'ر':200,'ش':300,'ت':400,'ة':400,
+  'ث':500,'خ':600,'ذ':700,'ض':800,'ظ':900,'غ':1000
+};
+
+const abjadLetters = [
+  {l:'ا',v:1},{l:'ب',v:2},{l:'ج',v:3},{l:'د',v:4},{l:'ه',v:5},{l:'و',v:6},
+  {l:'ز',v:7},{l:'ح',v:8},{l:'ط',v:9},{l:'ي',v:10},{l:'ك',v:20},{l:'ل',v:30},
+  {l:'م',v:40},{l:'ن',v:50},{l:'س',v:60},{l:'ع',v:70},{l:'ف',v:80},{l:'ص',v:90},
+  {l:'ق',v:100},{l:'ر',v:200},{l:'ش',v:300},{l:'ت',v:400},{l:'ث',v:500},
+  {l:'خ',v:600},{l:'ذ',v:700},{l:'ض',v:800},{l:'ظ',v:900},{l:'غ',v:1000}
+];
+
+// ========== UTILITY ==========
+function toArabicNum(n) {
+  const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).replace(/\d/g, d => arabicDigits[d]);
+}
+
+function formatNum(n) {
+  return toArabicNum(n.toLocaleString('en'));
+}
+
+function getAbjadValue(text) {
+  let total = 0;
+  for (const ch of text) {
+    if (abjadMap[ch]) total += abjadMap[ch];
+  }
+  return total;
+}
+
+// ========== INIT ==========
+function init() {
+  renderStats();
+  renderSurahTable();
+  populateSelects();
+  renderAbjadGrid();
+  renderCharts();
+  setupTabs();
+  setupFilters();
+}
+
+// Stats overview
+function renderStats() {
+  const totalVerses = surahs.reduce((s, su) => s + su.verses, 0);
+  const totalWords = surahs.reduce((s, su) => s + su.words, 0);
+  const totalLetters = surahs.reduce((s, su) => s + su.letters, 0);
+  const makkiCount = surahs.filter(s => s.type === 'مكية').length;
+  const madaniCount = surahs.filter(s => s.type === 'مدنية').length;
+
+  const statsHTML = [
+    {icon:'📖', value: formatNum(114), label:'عدد السور'},
+    {icon:'📜', value: formatNum(totalVerses), label:'عدد الآيات'},
+    {icon:'✍️', value: formatNum(totalWords), label:'عدد الكلمات'},
+    {icon:'🔤', value: formatNum(totalLetters), label:'عدد الحروف'},
+    {icon:'🕋', value: formatNum(makkiCount), label:'سور مكية'},
+    {icon:'🕌', value: formatNum(madaniCount), label:'سور مدنية'},
+  ].map(s => `
+    <div class="stat-card">
+      <span class="stat-icon">${s.icon}</span>
+      <span class="stat-value">${s.value}</span>
+      <span class="stat-label">${s.label}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('statsOverview').innerHTML = statsHTML;
+}
+
+// Surah table
+function renderSurahTable(filteredData) {
+  const data = filteredData || surahs;
+  const tbody = document.getElementById('surahTableBody');
+  const noRes = document.getElementById('noResults');
+
+  if (data.length === 0) {
+    tbody.innerHTML = '';
+    noRes.style.display = 'block';
+    updateFilterSummary(data);
+    return;
+  }
+
+  noRes.style.display = 'none';
+
+  tbody.innerHTML = data.map(s => `
+    <tr class="surah-row-clickable" onclick="showSurahDetail(${s.n})">
+      <td style="font-weight:700;color:var(--accent-gold);">${toArabicNum(s.n)}</td>
+      <td><span class="surah-name">${s.name}</span></td>
+      <td>${toArabicNum(s.verses)}</td>
+      <td>${formatNum(s.words)}</td>
+      <td>${formatNum(s.letters)}</td>
+      <td><span class="badge ${s.type === 'مكية' ? 'badge-makki' : 'badge-madani'}">${s.type}</span></td>
+      <td>${toArabicNum(s.revOrder)}</td>
+    </tr>
+  `).join('');
+
+  updateFilterSummary(data);
+}
+
+function updateFilterSummary(data) {
+  const totalV = data.reduce((s, su) => s + su.verses, 0);
+  const totalW = data.reduce((s, su) => s + su.words, 0);
+  const totalL = data.reduce((s, su) => s + su.letters, 0);
+  document.getElementById('filterSummary').innerHTML = `
+    <div class="summary-item"><div class="s-value">${formatNum(data.length)}</div><div class="s-label">سورة</div></div>
+    <div class="summary-item"><div class="s-value">${formatNum(totalV)}</div><div class="s-label">آية</div></div>
+    <div class="summary-item"><div class="s-value">${formatNum(totalW)}</div><div class="s-label">كلمة</div></div>
+    <div class="summary-item"><div class="s-value">${formatNum(totalL)}</div><div class="s-label">حرف</div></div>
+  `;
+}
+
+// Tabs
+function setupTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+// Search and filter
+function setupFilters() {
+  const searchInput = document.getElementById('surahSearch');
+  const revFilter = document.getElementById('revelationFilter');
+  const sortSelect = document.getElementById('sortBy');
+
+  function applyFilters() {
+    const query = searchInput.value.trim();
+    const revType = revFilter.value;
+    const sortVal = sortSelect.value;
+
+    let filtered = surahs.filter(s => {
+      const matchesSearch = !query || s.name.includes(query) || String(s.n) === query || toArabicNum(s.n) === query;
+      const matchesType = revType === 'all' || s.type === revType;
+      return matchesSearch && matchesType;
+    });
+
+    if (sortVal === 'revelation') filtered.sort((a, b) => a.revOrder - b.revOrder);
+    else if (sortVal === 'verses-desc') filtered.sort((a, b) => b.verses - a.verses);
+    else if (sortVal === 'verses-asc') filtered.sort((a, b) => a.verses - b.verses);
+    else if (sortVal === 'words-desc') filtered.sort((a, b) => b.words - a.words);
+    else if (sortVal === 'letters-desc') filtered.sort((a, b) => b.letters - a.letters);
+    else filtered.sort((a, b) => a.n - b.n);
+
+    renderSurahTable(filtered);
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+  revFilter.addEventListener('change', applyFilters);
+  sortSelect.addEventListener('change', applyFilters);
+}
+
+// Populate selects
+function populateSelects() {
+  const selects = ['calcSurahSelect', 'rangeFrom', 'rangeTo', 'abjadSurahSelect', 'compare1', 'compare2', 'sumSurahSelect2'];
+  selects.forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    sel.innerHTML = surahs.map(s =>
+      `<option value="${s.n}">${toArabicNum(s.n)} - ${s.name}</option>`
+    ).join('');
+  });
+  const rangeTo = document.getElementById('rangeTo');
+  if (rangeTo) rangeTo.value = '114';
+  const compare2 = document.getElementById('compare2');
+  if (compare2) compare2.value = '2';
+}
+
+// Abjad grid
+function renderAbjadGrid() {
+  const grid = document.getElementById('abjadGrid');
+  grid.innerHTML = abjadLetters.map(a => `
+    <div class="abjad-cell">
+      <div class="abjad-letter">${a.l}</div>
+      <div class="abjad-value">${toArabicNum(a.v)}</div>
+    </div>
+  `).join('');
+}
+
+// ========== CALCULATORS ==========
+
+function calculateSurahStats() {
+  const n = parseInt(document.getElementById('calcSurahSelect').value);
+  const s = surahs.find(su => su.n === n);
+  const abjadVal = getAbjadValue(s.name);
+  const surahPlusVerses = s.n + s.verses;
+
+  document.getElementById('surahCalcResult').innerHTML = `
+    <div class="result-row"><span class="result-label">اسم السورة</span><span class="result-value" style="font-size:22px;">${s.name}</span></div>
+    <div class="result-row"><span class="result-label">رقم السورة</span><span class="result-value">${toArabicNum(s.n)}</span></div>
+    <div class="result-row"><span class="result-label">عدد الآيات</span><span class="result-value">${toArabicNum(s.verses)}</span></div>
+    <div class="result-row"><span class="result-label">عدد الكلمات</span><span class="result-value">${formatNum(s.words)}</span></div>
+    <div class="result-row"><span class="result-label">عدد الحروف</span><span class="result-value">${formatNum(s.letters)}</span></div>
+    <div class="result-row"><span class="result-label">نوع السورة</span><span class="result-value" style="font-size:16px;">${s.type}</span></div>
+    <div class="result-row"><span class="result-label">ترتيب النزول</span><span class="result-value">${toArabicNum(s.revOrder)}</span></div>
+    <div class="result-row"><span class="result-label">جُمَّل اسم السورة</span><span class="result-value">${toArabicNum(abjadVal)}</span></div>
+    <div class="result-row"><span class="result-label">رقم السورة + عدد الآيات</span><span class="result-value">${toArabicNum(surahPlusVerses)}</span></div>
+    <div class="result-row"><span class="result-label">متوسط الكلمات/آية</span><span class="result-value">${toArabicNum((s.words / s.verses).toFixed(1))}</span></div>
+    <div class="result-row"><span class="result-label">متوسط الحروف/كلمة</span><span class="result-value">${toArabicNum((s.letters / s.words).toFixed(1))}</span></div>
+  `;
+}
+
+function calculateRange() {
+  const from = parseInt(document.getElementById('rangeFrom').value);
+  const to = parseInt(document.getElementById('rangeTo').value);
+  const start = Math.min(from, to);
+  const end = Math.max(from, to);
+
+  const rangeData = surahs.filter(s => s.n >= start && s.n <= end);
+  const totalV = rangeData.reduce((sum, s) => sum + s.verses, 0);
+  const totalW = rangeData.reduce((sum, s) => sum + s.words, 0);
+  const totalL = rangeData.reduce((sum, s) => sum + s.letters, 0);
+  const surahCount = rangeData.length;
+
+  document.getElementById('rangeCalcResult').innerHTML = `
+    <div class="result-row"><span class="result-label">عدد السور</span><span class="result-value">${toArabicNum(surahCount)}</span></div>
+    <div class="result-row"><span class="result-label">مجموع الآيات</span><span class="result-value">${formatNum(totalV)}</span></div>
+    <div class="result-row"><span class="result-label">مجموع الكلمات</span><span class="result-value">${formatNum(totalW)}</span></div>
+    <div class="result-row"><span class="result-label">مجموع الحروف</span><span class="result-value">${formatNum(totalL)}</span></div>
+    <div class="result-row"><span class="result-label">متوسط الآيات/سورة</span><span class="result-value">${toArabicNum((totalV / surahCount).toFixed(1))}</span></div>
+  `;
+}
+
+function searchByVerseCount() {
+  const count = parseInt(document.getElementById('verseCountSearch').value);
+  if (!count || count < 1) {
+    document.getElementById('verseCountResult').innerHTML = '<p style="color:var(--text-muted);font-size:13px;">أدخل عدداً صحيحاً</p>';
+    return;
+  }
+  const found = surahs.filter(s => s.verses === count);
+  if (found.length === 0) {
+    document.getElementById('verseCountResult').innerHTML = `<p style="color:var(--text-muted);font-size:13px;">لا توجد سور بعدد ${toArabicNum(count)} آية</p>`;
+  } else {
+    document.getElementById('verseCountResult').innerHTML = found.map(s =>
+      `<div class="result-row"><span class="result-label">${toArabicNum(s.n)}</span><span class="result-value" style="font-size:16px;">${s.name}</span></div>`
+    ).join('');
+  }
+}
+
+function findMultiples() {
+  const m = parseInt(document.getElementById('multipleOf').value);
+  if (!m || m < 1) {
+    document.getElementById('multiplesResult').innerHTML = '<p style="color:var(--text-muted);font-size:13px;">أدخل عدداً صحيحاً</p>';
+    return;
+  }
+  const found = surahs.filter(s => s.verses % m === 0);
+  if (found.length === 0) {
+    document.getElementById('multiplesResult').innerHTML = `<p style="color:var(--text-muted);font-size:13px;">لا توجد سور آياتها من مضاعفات ${toArabicNum(m)}</p>`;
+  } else {
+    document.getElementById('multiplesResult').innerHTML =
+      `<p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">عدد السور: ${toArabicNum(found.length)}</p>` +
+      found.map(s =>
+        `<div class="result-row"><span class="result-label">${s.name} (${toArabicNum(s.n)})</span><span class="result-value" style="font-size:16px;">${toArabicNum(s.verses)} آية</span></div>`
+      ).join('');
+  }
+}
+
+function calcSurahSum() {
+  const n = parseInt(document.getElementById('sumSurahSelect2').value);
+  const s = surahs.find(su => su.n === n);
+  const sum = s.n + s.verses;
+  const isOdd = sum % 2 !== 0;
+  const div7 = sum % 7 === 0;
+  const div19 = sum % 19 === 0;
+
+  document.getElementById('surahSumResult').innerHTML = `
+    <div class="result-row"><span class="result-label">رقم السورة</span><span class="result-value">${toArabicNum(s.n)}</span></div>
+    <div class="result-row"><span class="result-label">عدد الآيات</span><span class="result-value">${toArabicNum(s.verses)}</span></div>
+    <div class="result-row"><span class="result-label">المجموع</span><span class="result-value">${toArabicNum(sum)}</span></div>
+    <div class="result-row"><span class="result-label">فردي/زوجي</span><span class="result-value" style="font-size:14px;">${isOdd ? 'فردي' : 'زوجي'}</span></div>
+    <div class="result-row"><span class="result-label">قابل للقسمة على ٧</span><span class="result-value" style="font-size:14px;color:${div7 ? 'var(--accent-emerald)' : 'var(--text-muted)'};">${div7 ? 'نعم ✓' : 'لا'}</span></div>
+    <div class="result-row"><span class="result-label">قابل للقسمة على ١٩</span><span class="result-value" style="font-size:14px;color:${div19 ? 'var(--accent-emerald)' : 'var(--text-muted)'};">${div19 ? 'نعم ✓' : 'لا'}</span></div>
+  `;
+}
+
+// Abjad calculators
+function calculateAbjad() {
+  const text = document.getElementById('abjadInput').value.trim();
+  if (!text) {
+    document.getElementById('abjadResult').innerHTML = '<p style="color:var(--text-muted);font-size:13px;">أدخل نصاً عربياً</p>';
+    return;
+  }
+
+  const total = getAbjadValue(text);
+  const letters = [];
+  for (const ch of text) {
+    if (abjadMap[ch]) {
+      letters.push({letter: ch, value: abjadMap[ch]});
+    }
+  }
+
+  const breakdown = letters.map(l => `${l.letter}(${toArabicNum(l.value)})`).join(' + ');
+
+  document.getElementById('abjadResult').innerHTML = `
+    <div class="result-row"><span class="result-label">القيمة الإجمالية</span><span class="result-value">${formatNum(total)}</span></div>
+    <div class="result-row"><span class="result-label">عدد الحروف المحسوبة</span><span class="result-value">${toArabicNum(letters.length)}</span></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--text-secondary);line-height:1.8;word-break:break-all;">
+      ${breakdown}
+    </div>
+  `;
+}
+
+function calcSurahAbjad() {
+  const n = parseInt(document.getElementById('abjadSurahSelect').value);
+  const s = surahs.find(su => su.n === n);
+  const val = getAbjadValue(s.name);
+
+  const letters = [];
+  for (const ch of s.name) {
+    if (abjadMap[ch]) letters.push({letter: ch, value: abjadMap[ch]});
+  }
+  const breakdown = letters.map(l => `${l.letter}(${toArabicNum(l.value)})`).join(' + ');
+
+  document.getElementById('abjadSurahResult').innerHTML = `
+    <div class="result-row"><span class="result-label">سورة ${s.name}</span><span class="result-value">${formatNum(val)}</span></div>
+    <div class="result-row"><span class="result-label">رقم السورة</span><span class="result-value">${toArabicNum(s.n)}</span></div>
+    <div class="result-row"><span class="result-label">المجموع (جُمَّل + رقم السورة)</span><span class="result-value">${formatNum(val + s.n)}</span></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--text-secondary);line-height:1.8;">
+      ${breakdown}
+    </div>
+  `;
+}
+
+// Compare
+function compareSurahs() {
+  const n1 = parseInt(document.getElementById('compare1').value);
+  const n2 = parseInt(document.getElementById('compare2').value);
+  const s1 = surahs.find(s => s.n === n1);
+  const s2 = surahs.find(s => s.n === n2);
+
+  function compRow(label, v1, v2) {
+    const diff = v1 - v2;
+    const diffStr = diff > 0 ? `+${toArabicNum(diff)}` : diff < 0 ? toArabicNum(diff) : '٠';
+    const color = diff > 0 ? 'var(--accent-emerald)' : diff < 0 ? 'var(--accent-gold-dark)' : 'var(--text-muted)';
+    return `
+      <tr>
+        <td style="padding:10px;font-size:13px;font-weight:600;border-bottom:1px solid var(--border-light);">${label}</td>
+        <td style="padding:10px;text-align:center;font-family:'Amiri';font-size:18px;font-weight:700;color:var(--accent-emerald);border-bottom:1px solid var(--border-light);">${typeof v1 === 'number' ? formatNum(v1) : v1}</td>
+        <td style="padding:10px;text-align:center;font-family:'Amiri';font-size:18px;font-weight:700;color:var(--accent-gold);border-bottom:1px solid var(--border-light);">${typeof v2 === 'number' ? formatNum(v2) : v2}</td>
+        <td style="padding:10px;text-align:center;font-size:14px;font-weight:600;color:${color};border-bottom:1px solid var(--border-light);">${typeof v1 === 'number' ? diffStr : '-'}</td>
+      </tr>
+    `;
+  }
+
+  document.getElementById('compareResult').innerHTML = `
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:var(--bg-secondary);">
+          <th style="padding:10px;font-size:13px;text-align:right;">المعيار</th>
+          <th style="padding:10px;font-size:14px;text-align:center;color:var(--accent-emerald);">${s1.name}</th>
+          <th style="padding:10px;font-size:14px;text-align:center;color:var(--accent-gold);">${s2.name}</th>
+          <th style="padding:10px;font-size:13px;text-align:center;">الفرق</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${compRow('رقم السورة', s1.n, s2.n)}
+        ${compRow('عدد الآيات', s1.verses, s2.verses)}
+        ${compRow('عدد الكلمات', s1.words, s2.words)}
+        ${compRow('عدد الحروف', s1.letters, s2.letters)}
+        ${compRow('ترتيب النزول', s1.revOrder, s2.revOrder)}
+        ${compRow('نوع السورة', s1.type, s2.type)}
+        ${compRow('جُمَّل الاسم', getAbjadValue(s1.name), getAbjadValue(s2.name))}
+        ${compRow('رقم + آيات', s1.n + s1.verses, s2.n + s2.verses)}
+      </tbody>
+    </table>
+  `;
+}
+
+// Charts
+function renderCharts() {
+  // Top 20
+  const top20 = [...surahs].sort((a, b) => b.verses - a.verses).slice(0, 20);
+  const maxV = top20[0].verses;
+  document.getElementById('topSurahsChart').innerHTML = top20.map(s => `
+    <div class="bar-row">
+      <span class="bar-label">${s.name}</span>
+      <div class="bar-track"><div class="bar-fill emerald" style="width:${(s.verses / maxV * 100)}%"></div></div>
+      <span class="bar-value">${toArabicNum(s.verses)}</span>
+    </div>
+  `).join('');
+
+  // Bottom 20
+  const bottom20 = [...surahs].sort((a, b) => a.verses - b.verses).slice(0, 20);
+  const maxB = bottom20[bottom20.length - 1].verses;
+  document.getElementById('bottomSurahsChart').innerHTML = bottom20.map(s => `
+    <div class="bar-row">
+      <span class="bar-label">${s.name}</span>
+      <div class="bar-track"><div class="bar-fill gold" style="width:${(s.verses / maxB * 100)}%"></div></div>
+      <span class="bar-value">${toArabicNum(s.verses)}</span>
+    </div>
+  `).join('');
+
+  // Pie chart (CSS only)
+  const makki = surahs.filter(s => s.type === 'مكية').length;
+  const madani = surahs.filter(s => s.type === 'مدنية').length;
+  const makkiPct = (makki / 114 * 100).toFixed(1);
+  const madaniPct = (madani / 114 * 100).toFixed(1);
+
+  document.getElementById('pieChart').innerHTML = `
+    <div style="position:relative;width:180px;height:180px;">
+      <svg viewBox="0 0 36 36" style="width:180px;height:180px;transform:rotate(-90deg);">
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent-gold)" stroke-width="3.5"
+          stroke-dasharray="${makkiPct} ${100 - makkiPct}" stroke-dashoffset="0"/>
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent-emerald)" stroke-width="3.5"
+          stroke-dasharray="${madaniPct} ${100 - madaniPct}" stroke-dashoffset="${-makkiPct}"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+        <div style="font-family:'Amiri';font-size:22px;font-weight:700;color:var(--text-primary);">١١٤</div>
+        <div style="font-size:11px;color:var(--text-muted);">سورة</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:16px;height:16px;border-radius:4px;background:var(--accent-gold);"></div>
+        <span style="font-size:14px;">مكية: <strong>${toArabicNum(makki)}</strong> سورة (${toArabicNum(makkiPct)}%)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:16px;height:16px;border-radius:4px;background:var(--accent-emerald);"></div>
+        <span style="font-size:14px;">مدنية: <strong>${toArabicNum(madani)}</strong> سورة (${toArabicNum(madaniPct)}%)</span>
+      </div>
+    </div>
+  `;
+
+  // Canvas chart - verse distribution
+  drawVersesChart();
+}
+
+function drawVersesChart() {
+  const canvas = document.getElementById('versesCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = 250 * dpr;
+  ctx.scale(dpr, dpr);
+
+  const w = canvas.offsetWidth;
+  const h = 250;
+  const padding = {top: 20, right: 10, bottom: 30, left: 40};
+  const chartW = w - padding.left - padding.right;
+  const chartH = h - padding.top - padding.bottom;
+
+  const maxV = Math.max(...surahs.map(s => s.verses));
+  const barW = chartW / 114;
+
+  // Background
+  const isDark = document.documentElement.classList.contains('dark');
+  ctx.fillStyle = isDark ? '#211d15' : '#ffffff';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid lines
+  ctx.strokeStyle = isDark ? '#3a3120' : '#e8dcc8';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 5; i++) {
+    const y = padding.top + (chartH / 5) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+
+    ctx.fillStyle = isDark ? '#8b7a5c' : '#8b7355';
+    ctx.font = '10px Tajawal';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxV - (maxV / 5) * i), padding.left - 5, y + 4);
+  }
+
+  // Bars
+  surahs.forEach((s, i) => {
+    const x = padding.left + i * barW;
+    const barH = (s.verses / maxV) * chartH;
+    const y = padding.top + chartH - barH;
+
+    const isMakki = s.type === 'مكية';
+    ctx.fillStyle = isMakki
+      ? (isDark ? '#d4a84a' : '#c8973e')
+      : (isDark ? '#2d9b6a' : '#1b6e4a');
+
+    ctx.globalAlpha = 0.8;
+    ctx.fillRect(x + 0.5, y, Math.max(barW - 1, 1), barH);
+    ctx.globalAlpha = 1;
+  });
+}
+
+// Modal
+function showSurahDetail(n) {
+  const s = surahs.find(su => su.n === n);
+  const abjadVal = getAbjadValue(s.name);
+
+  document.getElementById('modalContent').innerHTML = `
+    <button class="modal-close" onclick="closeSurahModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-surah-header">
+      <div class="modal-surah-number">${toArabicNum(s.n)}</div>
+      <div class="modal-surah-name">${s.name}</div>
+      <span class="badge ${s.type === 'مكية' ? 'badge-makki' : 'badge-madani'}" style="margin-top:8px;">${s.type}</span>
+    </div>
+    <div class="modal-info-grid">
+      <div class="modal-info-item"><div class="modal-info-label">عدد الآيات</div><div class="modal-info-value">${toArabicNum(s.verses)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">عدد الكلمات</div><div class="modal-info-value">${formatNum(s.words)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">عدد الحروف</div><div class="modal-info-value">${formatNum(s.letters)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">ترتيب النزول</div><div class="modal-info-value">${toArabicNum(s.revOrder)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">جُمَّل الاسم</div><div class="modal-info-value">${formatNum(abjadVal)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">رقم + آيات</div><div class="modal-info-value">${toArabicNum(s.n + s.verses)}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">كلمات/آية</div><div class="modal-info-value">${toArabicNum((s.words / s.verses).toFixed(1))}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">حروف/كلمة</div><div class="modal-info-value">${toArabicNum((s.letters / s.words).toFixed(1))}</div></div>
+    </div>
+  `;
+
+  document.getElementById('surahModal').classList.add('show');
+}
+
+function closeSurahModal() {
+  document.getElementById('surahModal').classList.remove('show');
+}
+
+document.getElementById('surahModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSurahModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeSurahModal();
+});
+
+// Handle resize for canvas
+window.addEventListener('resize', function() {
+  const canvas = document.getElementById('versesCanvas');
+  if (canvas && canvas.offsetWidth > 0) {
+    drawVersesChart();
+  }
+});
+
+// Initialize
+init();
+</script>
+</body>
+</html>
